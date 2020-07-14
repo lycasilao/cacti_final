@@ -222,7 +222,25 @@
                                                 <div class="d-flex">
                                                     <div class="font-weight-bold"><div class="font-weight-bold">Order Status: <?php echo $orderstatus?></div></div>  
                                                 </div>  
-                                                <div><p>Payment Mode: COD</p></div>
+                                                <div>
+                                                <button class="btn btn-warning" ><a  class="nav" href="/cacti/stripe/index.php">Pay Now</a></button> <br> <br>
+                                                <form class="paypal" action="payment.php" method="post" id="paypal_form">
+                                                    <input type="hidden" name="cmd" value="_xclick" />
+                                                    <input type="hidden" name="no_note" value="1" />
+                                                    <input type="hidden" name="lc" value="UK" />
+                                                    <input type="hidden" name="bn" value="PP-BuyNowBF:btn_buynow_LG.gif:NonHostedGuest" />
+                                                    <input type="hidden" name="first_name" value="Customer's First Name" />
+                                                    <input type="hidden" name="last_name" value="Customer's Last Name" />
+                                                    <input type="hidden" name="payer_email" value="customer@example.com" />
+                                                    <input type="hidden" name="item_number" value="123456" />
+                                                    <table border="0" cellpadding="10" cellspacing="0" align="right"><tr><td align="right"></td></tr><tr><td align="right"><input type="image" src="https://www.paypalobjects.com/webstatic/en_AU/i/buttons/btn_paywith_primary_s.png" alt="Submit" /></td></tr></table>
+                                                </form>
+                                               
+                                                <!-- PayPal Logo -->
+                                                
+                                                <!-- PayPal Logo -->
+                                                </div>
+                                               
                                                 </div>
                                             </div>
                                         </div>
@@ -233,7 +251,30 @@
                     </div>
                 </div>
         <!-- End Cart -->
-        <?php } ?>                                
+        <?php } ?>                      
+
+         <!-- this modal is for Add Product -->
+            <div class="modal fade" id="checkout" role="dialog">
+                <div class="modal-dialog">
+                
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header" style="padding:20px 50px;">
+                        <h3 align="center" ><b>Place Order</b></h3>
+                    <button type="button" class="close" data-dismiss="modal" title="Close">&times;</button>
+                    </div>
+                    <div class="modal-body" style="padding:40px 50px;">
+        
+                    <form class="form-horizontal" action="#" name="form" method="post">
+                    <div class="paypal">
+                        <button type="submit" name="paypal"><img src="https://www.paypalobjects.com/webstatic/mktg/Logo/pp-logo-100px.png" border="0" alt="PayPal Logo"></button>
+                    </div>
+                    </form>
+        
+                    </div>
+                </div>
+                </div>
+            </div>
         <!-- Start copyright  -->
         <div class="footer-copyright">
             <p class="footer-company">All Rights Reserved. &copy; 2020 <a href="#">CACTI&CO</a></p>

@@ -147,7 +147,7 @@
                                                                 <h4><?php echo $row['prodname'] ?> <br> (Stocks:<?php echo $row['stocks'] ?> ) </h4>
                                                                 <h5> Php <?php echo $row['price'] ?> </h5> <br>
                                                                 <a  href='edit.php?edit="<?php echo $row['product_code'] ?>"'>Edit</a>
-                                                                <a href='delete.php?delete="<?php echo $row['product_code'] ?>"'>Delete</a> 
+                                                                <a href='delete.php?delete="<?php echo $row['product_code'] ?>"' onclick="return confirm('Are you sure you want to delete this product?')" >Delete</a> 
                                                             </div>
                                                         </div>
                                                     </div>
@@ -209,7 +209,7 @@
                             <select name="prodtype" class="form-control" placeholder="" required>
                             <option>Select</option>
                             <option value="Cactus">Cactus</option>
-                            <option value="Cucculent">Succulent</option>
+                            <option value="Succulent">Succulent</option>
                             <option value="Sets">Sets</option>
                             </select>
                         </div>

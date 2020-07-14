@@ -33,7 +33,7 @@
           ?>
           <script>
               alert('Successfully added.');
-              window.location.href='product_admin.php?';
+              window.location.href='product_admin.php?username=admin';
           </script>
         <?php 
       } 
@@ -41,13 +41,13 @@
           ?>
           <script>
               alert('Invalid.');
-              window.location.href='product_admin.php';
+              window.location.href='product_admin.php?username=admin';
           </script>
         <?php 
       }
 
-    mysqli_close ();
   }
+   mysqli_close ($conn);
 ?>
 
        

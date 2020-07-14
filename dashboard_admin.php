@@ -58,7 +58,7 @@
                         <a href="#"  id="basic" class="selectpicker show-tick form-control sign-up" data-toggle="dropdown"><?php echo $user?></a>
                             <ul class="dropdown-menu">
                                 <li><a  class="nav" data-toggle="modal" data-target="#settings" href="#">Settings</a></li>
-                                <li><a class="nav" href="logout.php" id="logout" >Logout</a></li>
+                                <li><a class="nav" href="logout.php" onclick="return confirm('Are you sure you want to logout?')" >Logout</a></li>
                             </ul>
                         </div>
                         <div class="text-slid-box">
@@ -356,6 +356,7 @@
             </div>
         </footer>
         <!-- End Footer  -->
+       
 
         <!-- Start copyright  -->
         <div class="footer-copyright">

@@ -2,7 +2,7 @@
 #--------------------------------------------------------------------------#
 # Filename        :  logout.php                                            #
 # Author          :  Lyka C. Casilao                                       #        
-# Last Modified   :  July 2, 2020                                          #
+# Last Modified   :  July 6, 2020                                          #
 # Honor Code      : This is my own work and I have not received any        #
 #                   unauthorized help in completing this. I have not       #
 #                   copied from my classmate, friend, nor any unauthorized #
@@ -14,17 +14,25 @@
 -->
 
 <?php
-    $conn = new mysqli('localhost', 'lykacasilao', 'admin', 'cacti_database') ;
-    if ($conn->connect_error)
-        die("Connection Failed");
-?>
-
-<?php
+    // Initialize the session.
+    // If you are using session_name("something"), don't forget it now!
     session_start();
-    session_destroy();
-?>
-    <script>
-    alert('Successfully logout.');
-    window.location.href='index.php?';
-    </script>
 
+    // Unset all of the session variables.
+    $_SESSION = array();
+
+    // If it's desired to kill the session, also delete the session cookie.
+    // Note: This will destroy the session, and not just the session data!
+    if (ini_get("session.use_cookies")) {
+        $params = session_get_cookie_params();
+        setcookie(session_name(), '', time() - 42000,
+            $params["path"], $params["domain"],
+            $params["secure"], $params["httponly"]
+        );
+    }
+
+    // Finally, destroy the session.
+    session_destroy();
+    header("Location: index.php");
+    exit;
+?>

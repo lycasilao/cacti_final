@@ -43,6 +43,8 @@
         <link rel="stylesheet" href="css/responsive.css">
         <!-- Custom CSS -->
         <link rel="stylesheet" href="css/custom.css">
+        
+       
     </head>
 
     <?php  $user = $_GET['username'];?>
@@ -165,7 +167,7 @@
                     <div class="col-lg-8 col-sm-12">
                         <div class="contact-form-right">
                             <h2>Message</h2>
-                            <form id="contactForm">
+                            <form  action="/cacti/send-message.php?username=<?php echo $user?>" name="form" method="post">
                                 <div class="row">
                                     <div class="col-md-12">
                                         <div class="form-group">
@@ -175,25 +177,24 @@
                                     </div>
                                     <div class="col-md-12">
                                         <div class="form-group">
-                                            <input type="text" placeholder="Email" id="email" class="form-control" name="name" required data-error="Please enter your email">
+                                            <input type="email" placeholder="Email" id="email" class="form-control" name="email" required data-error="Please enter your email">
                                             <div class="help-block with-errors"></div>
                                         </div>
                                     </div>
                                     <div class="col-md-12">
                                         <div class="form-group">
-                                            <input type="text" class="form-control" id="subject" name="name" placeholder="Subject" required data-error="Please enter your Subject">
+                                            <input type="text" class="form-control" id="subject" name="subject" placeholder="Subject" required data-error="Please enter your Subject">
                                             <div class="help-block with-errors"></div>
                                         </div>
                                     </div>
                                     <div class="col-md-12">
                                         <div class="form-group">
-                                            <textarea class="form-control" id="message" placeholder="Message" rows="4" data-error="Write your message" required></textarea>
+                                            <textarea class="form-control" id="message" placeholder="Message" name="message" rows="4" data-error="Write your message" required></textarea>
                                             <div class="help-block with-errors"></div>
                                         </div>
                                         <div class="submit-button text-center">
-                                            <button class="btn hvr-hover" id="submit" type="submit">Send Message</button>
-                                            <div id="msgSubmit" class="h3 text-center hidden"></div>
-                                            <div class="clearfix"></div>
+                                            <input class="btn btn-warning" type="submit" value="Send Message">
+                                          
                                         </div>
                                     </div>
                                 </div>
@@ -220,6 +221,120 @@
             </div>
         </div>
         <!-- End Cart -->
+        <div class="container" >
+            <div class="row">
+                <form method="post" action="">
+                        <div class="col col-lg-6" align="center">
+                        
+                            <input id="pac-input" class="controls" type="text"
+                                placeholder="Enter a location">
+                            <div id="type-selector" class="controls">
+                            <input type="radio" name="type" id="changetype-all" checked="checked">
+                            <label for="changetype-all">All</label>
+                            </div>
+                            <div id="map" style="height: 400px;width: 1110px"></div>
+                            <br>
+                            <input type="hidden" name="lat" id="lat">
+                            <input type="hidden" name="lng" id="lng">
+                            <input type="hidden" name="location" id="location">
+                        
+                        </div>
+                    </form>
+                </div><!--End of row-->
+            </div><!--End of conatiner-->
+                <script>
+                // This example requires the Places library. Include the libraries=places
+                // parameter when you first load the API. For example:
+                //<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAXOIu59y2Cxtmjfdv7xb7G-ju6xnS4bbQ&libraries=places">
+
+                function initMap() {
+                    var map = new google.maps.Map(document.getElementById('map'), {
+                    center: {
+                        lat: -33.8688, lng: 151.2195},
+                    zoom: 13
+                    });
+                    var input = /** @type {!HTMLInputElement} */(
+                        document.getElementById('pac-input'));
+
+                    var types = document.getElementById('type-selector');
+                    map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+                    map.controls[google.maps.ControlPosition.TOP_LEFT].push(types);
+
+                    var autocomplete = new google.maps.places.Autocomplete(input);
+                    autocomplete.bindTo('bounds', map);
+
+                    var infowindow = new google.maps.InfoWindow();
+                    var marker = new google.maps.Marker({
+                    map: map,
+                    anchorPoint: new google.maps.Point(0, -29)
+                    });
+
+                    autocomplete.addListener('place_changed', function() {
+                    infowindow.close();
+                    marker.setVisible(false);
+                    var place = autocomplete.getPlace();
+
+                    if (!place.geometry) {
+                        // User entered the name of a Place that was not suggested and
+                        // pressed the Enter key, or the Place Details request failed.
+                        window.alert("No details available for input: '" + place.name + "'");
+                        return;
+                    }
+
+                    // If the place has a geometry, then present it on a map.
+                    if (place.geometry.viewport) {
+                        map.fitBounds(place.geometry.viewport);
+                    } else {
+                        map.setCenter(place.geometry.location);
+                        map.setZoom(17);  // Why 17? Because it looks good.
+                    }
+                    marker.setIcon(/** @type {google.maps.Icon} */({
+                        url: place.icon,
+                        size: new google.maps.Size(71, 71),
+                        origin: new google.maps.Point(0, 0),
+                        anchor: new google.maps.Point(17, 34),
+                        scaledSize: new google.maps.Size(35, 35)
+                    }));
+                    marker.setPosition(place.geometry.location);
+                    marker.setVisible(true);
+                    var item_Lat =place.geometry.location.lat()
+                    var item_Lng= place.geometry.location.lng()
+                    var item_Location = place.formatted_address;
+                    //alert("Lat= "+item_Lat+"_____Lang="+item_Lng+"_____Location="+item_Location);
+                    $("#lat").val(item_Lat);
+                    $("#lng").val(item_Lng);
+                    $("#location").val(item_Location);
+                    var address = '';
+                    if (place.address_components) {
+                        address = [
+                        (place.address_components[0] && place.address_components[0].short_name || ''),
+                        (place.address_components[1] && place.address_components[1].short_name || ''),
+                        (place.address_components[2] && place.address_components[2].short_name || '')
+                        ].join(' ');
+                    }
+
+                    infowindow.setContent('<div><strong>' + place.name + '</strong><br>' + address);
+                    infowindow.open(map, marker);
+                    });
+
+                    // Sets a listener on a radio button to change the filter type on Places
+                    // Autocomplete.
+                    function setupClickListener(id, types) {
+                    var radioButton = document.getElementById(id);
+                    radioButton.addEventListener('click', function() {
+                        autocomplete.setTypes(types);
+                    });
+                    }
+
+                    setupClickListener('changetype-all', []);
+                    setupClickListener('changetype-address', ['address']);
+                    setupClickListener('changetype-establishment', ['establishment']);
+                    setupClickListener('changetype-geocode', ['geocode']);
+                }
+                </script>
+                <script src="https://maps.googleapis.com/maps/api/js?key=&libraries=places&callback=initMap"
+                    async defer></script>
+    
 
         <!-- Start copyright  -->
         <div class="footer-copyright">

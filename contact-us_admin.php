@@ -2,7 +2,7 @@
 #--------------------------------------------------------------------------#
 # Filename        :  contact-us_admin.php                                  #
 # Author          :  Lyka C. Casilao                                       #        
-# Last Modified   :  July 2, 2020                                          #
+# Last Modified   :  July 13, 2020                                          #
 # Honor Code      : This is my own work and I have not received any        #
 #                   unauthorized help in completing this. I have not       #
 #                   copied from my classmate, friend, nor any unauthorized #

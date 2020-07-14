@@ -12,14 +12,13 @@
 #                   points for this endeavor.                              #
 #--------------------------------------------------------------------------#
 -->
-
 <?php
-    $servername = "localhost";
-    $username = "lykacasilao";
-    $password = "admin";
-    $db = 'cacti_database';
-
-    // Create connection
-    $conn = new mysqli($servername, $username, $password, $db) or die("Unable to connect");
-?>
-
+    session_start();
+    session_regenerate_id(true);
+    // change the information according to your database
+    $db_connection = mysqli_connect("localhost","lykacasilao","admin","cacti_database");
+    // CHECK DATABASE CONNECTION
+    if(mysqli_connect_errno()){
+        echo "Connection Failed".mysqli_connect_error();
+        exit;
+}
